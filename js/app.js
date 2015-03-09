@@ -6,10 +6,13 @@ var allowedKeys = {
     40: 'down'
 };
 
+// blockWidth and blockHeight must match the image sizes
 var blockWidth = 101;
 var blockHeight = 83;
+// set enemy starting Y locations and possible speeds
 var enemyStartY = [60, 60 + blockHeight, 60 + blockHeight * 2];
 var enemySpeed = [100, 130, 200, 250, 300];
+// player starting location
 var playerStartX = 202;
 var playerStartY = 392;
 
@@ -26,8 +29,9 @@ Enemy.prototype.initialize = function() {
     this.sprite = 'images/enemy-bug.png';
 
     this.x = -blockWidth;
-    this.y = enemyStartY[Math.floor(Math.random() * 3)];
-    this.speed = enemySpeed[Math.floor(Math.random() * 5)];
+    // choose a random level and speed for the enemy
+    this.y = enemyStartY[Math.floor(Math.random() * enemyStartY.length)];
+    this.speed = enemySpeed[Math.floor(Math.random() * enemySpeed.length)];
 }
 
 // Update the enemy's position, required method for game
@@ -38,10 +42,12 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     this.x += this.speed * dt;
 
+    // check for enemy off screen to the right
     if (this.x > blockWidth * 9) {
         this.initialize();
     }
 
+    // check if enemy is near player on same level
     if (this.y === player.y && (Math.abs(this.x - player.x) < (blockWidth / 2))) {
         player.initialize();
     }
@@ -64,6 +70,7 @@ var Player = function() {
     // a helper we've provided to easily load images
     this.initialize();
 
+    // pick a random avatar (alternative to use of arrays as for the enemy object)
     switch(Math.floor(Math.random() * 5)) {
         case 0 :
             this.sprite = 'images/char-boy.png';
@@ -129,6 +136,7 @@ Player.prototype.update = function(dt) {
     }
     this.move = null;
 
+    // reset the game if the player makes it to the river
     if (this.y < 60) {
         this.initialize();
         this.lives -= 1;
