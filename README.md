@@ -8,7 +8,7 @@ for self-checking their submission.
 About
 ----------
 
-Simple Frogger-like javascript web-application
+A simple Frogger-like javascript web-application
 
 Configure
 ---------
@@ -26,6 +26,14 @@ ENEMY_SPEED : an array of n elements where n > 0 and each element is the pixels 
 
 PLAYER_START_X : player starting X location
 PLAYER_START_Y : player starting Y location
+
+Instructions
+------------
+
+Launch the game in a browser by navigating to file://<path-to-project-folder>/index.html
+
+Use the up/down/left/right arrow keys to move the player up to the river while avoiding enemies on the road.
+These keys can be mapped to other keys, see the Configure section above.
 
 Contribute
 ----------
