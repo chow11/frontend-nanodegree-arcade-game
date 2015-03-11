@@ -1,20 +1,20 @@
 // Game Parameters
-var allowedKeys = {
+var ALLOWED_KEYS = {
     37: 'left',
     38: 'up',
     39: 'right',
     40: 'down'
 };
 
-// blockWidth and blockHeight must match the image sizes
-var blockWidth = 101;
-var blockHeight = 83;
+// BLOCK_WIDTH and BLOCK_HEIGHT must match the image sizes
+var BLOCK_WIDTH = 101;
+var BLOCK_HEIGHT = 83;
 // set enemy starting Y locations and possible speeds
-var enemyStartY = [60, 60 + blockHeight, 60 + blockHeight * 2];
-var enemySpeed = [100, 130, 200, 250, 300];
+var ENEMY_START_Y = [60, 60 + BLOCK_HEIGHT, 60 + BLOCK_HEIGHT * 2];
+var ENEMY_SPEED = [100, 130, 200, 250, 300];
 // player starting location
-var playerStartX = 202;
-var playerStartY = 392;
+var PLAYER_START_X = 202;
+var PLAYER_START_Y = 392;
 
 // Enemies our player must avoid
 var Enemy = function() {
@@ -28,10 +28,10 @@ Enemy.prototype.initialize = function() {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 
-    this.x = -blockWidth;
+    this.x = -BLOCK_WIDTH;
     // choose a random level and speed for the enemy
-    this.y = enemyStartY[Math.floor(Math.random() * enemyStartY.length)];
-    this.speed = enemySpeed[Math.floor(Math.random() * enemySpeed.length)];
+    this.y = ENEMY_START_Y[Math.floor(Math.random() * ENEMY_START_Y.length)];
+    this.speed = ENEMY_SPEED[Math.floor(Math.random() * ENEMY_SPEED.length)];
 }
 
 // Update the enemy's position, required method for game
@@ -43,12 +43,12 @@ Enemy.prototype.update = function(dt) {
     this.x += this.speed * dt;
 
     // check for enemy off screen to the right
-    if (this.x > blockWidth * 9) {
+    if (this.x > BLOCK_WIDTH * 9) {
         this.initialize();
     }
 
     // check if enemy is near player on same level
-    if (this.y === player.y && (Math.abs(this.x - player.x) < (blockWidth / 2))) {
+    if (this.y === player.y && Math.abs(this.x - player.x) < (BLOCK_WIDTH / 2)) {
         player.initialize();
     }
 }
@@ -98,8 +98,8 @@ var Player = function() {
 }
 
 Player.prototype.initialize = function() {
-    this.x = playerStartX;
-    this.y = playerStartY;
+    this.x = PLAYER_START_X;
+    this.y = PLAYER_START_Y;
     this.move = null;
 }
 
@@ -112,23 +112,23 @@ Player.prototype.update = function(dt) {
     switch(this.move) {
         case 'left' :
             if (this.x > 0) {
-                this.x -= blockWidth;
+                this.x -= BLOCK_WIDTH;
             }
         break;
 
         case 'up' :
-            this.y -= blockHeight;
+            this.y -= BLOCK_HEIGHT;
         break;
-        
+
         case 'right' :
-            if (this.x < blockWidth * 5) {
-                this.x += blockWidth;
+            if (this.x < BLOCK_WIDTH * 4) {
+                this.x += BLOCK_WIDTH;
             }
         break;
-        
+
         case 'down' :
-            if (this.y < playerStartY) {
-                this.y += blockHeight;
+            if (this.y < PLAYER_START_Y) {
+                this.y += BLOCK_HEIGHT;
             }
         break;
 
@@ -163,12 +163,12 @@ var player = new Player();
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
-    player.handleInput(allowedKeys[e.keyCode]);
+    player.handleInput(ALLOWED_KEYS[e.keyCode]);
 });
 
 // disable default key actions
 document.addEventListener('keydown', function(e) {
-    if (typeof allowedKeys[e.keyCode] === 'undefined') {
+    if (typeof ALLOWED_KEYS[e.keyCode] === 'undefined') {
         e.preventDefault();
     }
 }, false);
