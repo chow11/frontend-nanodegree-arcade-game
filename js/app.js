@@ -21,7 +21,7 @@ var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
     this.initialize();
-}
+};
 
 Enemy.prototype.initialize = function() {
     // The image/sprite for our enemies, this uses
@@ -32,7 +32,7 @@ Enemy.prototype.initialize = function() {
     // choose a random level and speed for the enemy
     this.y = ENEMY_START_Y[Math.floor(Math.random() * ENEMY_START_Y.length)];
     this.speed = ENEMY_SPEED[Math.floor(Math.random() * ENEMY_SPEED.length)];
-}
+};
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -51,12 +51,12 @@ Enemy.prototype.update = function(dt) {
     if (this.y === player.y && Math.abs(this.x - player.x) < (BLOCK_WIDTH / 2)) {
         player.initialize();
     }
-}
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -95,20 +95,15 @@ var Player = function() {
         default:
             this.sprite = 'images/char-boy.png';
     }
-}
+};
 
 Player.prototype.initialize = function() {
     this.x = PLAYER_START_X;
     this.y = PLAYER_START_Y;
     this.move = null;
-}
+};
 
-// Update the player's position, required method for game
-// Parameter: dt, a time delta between ticks
-Player.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
+Player.prototype.update = function() {
     switch(this.move) {
         case 'left' :
             if (this.x > 0) {
@@ -141,17 +136,17 @@ Player.prototype.update = function(dt) {
         this.initialize();
         this.lives -= 1;
     }
-}
+};
 
 // Draw the player on the screen, required method for game
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 // Draw the player on the screen, required method for game
 Player.prototype.handleInput = function(direction) {
     this.move = direction;
-}
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -172,4 +167,3 @@ document.addEventListener('keydown', function(e) {
         e.preventDefault();
     }
 }, false);
-
